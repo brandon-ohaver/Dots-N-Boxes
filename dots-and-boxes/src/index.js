@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import MainMenu from './containers/MainMenu.jsx'
+import Leaderboard from './containers/Leaderboard'
+import NavBar from './components/NavBar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const AppContainer = () => {
+  return(
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route element={<MainMenu />} exact path='/main-menu'/>
+          <Route element={<Leaderboard />} exact path='/leaderboard'/>
+        </Routes>
+      </BrowserRouter>
+  )
+  
+}
+
+ReactDOM.render(<AppContainer />, document.querySelector('#root'))
