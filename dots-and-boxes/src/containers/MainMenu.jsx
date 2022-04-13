@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const MainMenu = () => {
-    return (
-        <>
-            <p>This is the main menu page</p>
-        </>
-    )
-    
-}
+  return (
+    <>
+      <p>This is the main menu</p>
+    </>
+  );
+};
 
-export default MainMenu
+export default MainMenu;
