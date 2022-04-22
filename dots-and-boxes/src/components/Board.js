@@ -6,6 +6,24 @@ class Board extends React.Component {
       super(props)
       this.state = this.initialBoard(5)
     }
+
+    
+    simulateClick = (element) => { // simulated click event for the bot to use
+      console.log("Earl chose this div for his move:");
+      console.dir(element);
+      const mouseClickEvents = ['mousedown', 'click', 'mouseup'];
+      mouseClickEvents.forEach(mouseEventType =>
+        element.dispatchEvent(
+          new MouseEvent(mouseEventType, {
+              view: window,
+              bubbles: true,
+              cancelable: true,
+              buttons: 1
+          })
+        )
+      );
+
+    }
   
     initialBoard = (size) => {
       let state = {boardSize: size,
@@ -31,7 +49,7 @@ class Board extends React.Component {
     return state
   }
   
-    fillLine = (event) => {
+    fillLine = (event) => { // when the player or bot clicks an available line
       var currentCoord=event.target.dataset.coord
       if (this.state.lineCoordinates[currentCoord] === 0) {
         //event.target.style.backgroundColor =  this.state.turn
@@ -49,6 +67,7 @@ class Board extends React.Component {
         let newBoxColors = this.state.boxColors
   
         var madeSquare = 0
+        console.log("DRAWING LINE: " + this.state.turn);
   
         if (i === "0") {
           if (this.checkSquare(j,k) === 4) {
@@ -89,7 +108,7 @@ class Board extends React.Component {
             }))
           }
         }
-        if (madeSquare === 0) {
+        if (madeSquare === 0) { // swap turns
           this.setState((prevState)=> ({
             turn: prevState.turn === "red" ? "blue" : "red",
           }))
@@ -97,9 +116,110 @@ class Board extends React.Component {
           this.checkGameOver()
         }
       }
+      if (this.state.turn === "red" && madeSquare === 0) { // if red doesn't get a point with the move
+        console.log("*************RED END NO SQUARE");
+        this.setState((prevState)=>({
+          turn: (prevState.turn ==="red") ? "red" : "blue",
+        }))
+        setTimeout(() => this.makeAIMove(), 0);
+      }
+      else if (this.state.turn !== "red" && madeSquare === 0) { // if blue doesn't get a point with the move
+        console.log("*************BLUE END NO SQUARE");
+        this.setState((prevState)=> ({
+          turn: prevState.turn === "blue" ? "blue" : "red",
+        }))      
+      }
+
+      else if (this.state.turn !== "red" && madeSquare !== 0) { // if blue gets a point with the move
+        this.setState((prevState)=> ({
+          turn: prevState.turn === "blue" ? "blue" : "red",
+        }))
+        console.log("blue making another move since they got a box");
+        setTimeout(this.makeAIMove, 500); // make another move (without the delay the call stack can fill up)
+      }
+      
+    }
+
+    makeAIMove = () => { // Earl
+      console.log("makeAIMove() called ");
+      var clickableChoices = []; // possible moves for bot to click
+      var movesPoints = []; // how many points will bot get for each possible move
+      var bestMoveValue = -1;
+      var bestMoveLocation;
+
+      var horizChoices = document.getElementsByClassName("horizContainer"); // grabs all available hor. lines
+      var vertChoices = document.getElementsByClassName("vertContainer"); // grabs all available ver. lines
+
+      Array.from(horizChoices).forEach(element => { // push horiz. clickable lines to array
+        var c = element.style.getPropertyValue("background-color");
+        if (c === "rgb(255, 255, 255)")
+        {
+          clickableChoices.push(element);
+        }
+      });
+
+      Array.from(vertChoices).forEach(element => { // push vert. clickable lines to array
+        var c = element.style.getPropertyValue("background-color");
+        if (c === "rgb(255, 255, 255)")
+        {
+          clickableChoices.push(element);
+        }
+      });
+      //console.log(clickableChoices); // good spot for debugging
+      var indexedMove = -1;
+      Array.from(clickableChoices).forEach(element => { // pick a good move (will be improved)
+        var currentCoord = element.dataset.coord;
+        var splitCoord=currentCoord.split(',')
+        var i = splitCoord[0]
+        var j = splitCoord[1]
+        var k = splitCoord[2]
+
+        var madeSquares = 0 // separate madeSquare from fillLine, this one counts how many squares will be made
+  
+        if (i === "0") {
+          if (this.checkSquare(j,k) === 3) {
+            madeSquares++;
+          }
+          if (this.checkSquare(parseFloat(j)-1,k) === 3) {
+            madeSquares++;
+          }
+        } else {
+          if (this.checkSquare(k,j) === 3) {
+            madeSquares++;
+          }
+          if (this.checkSquare(k,parseFloat(j)-1) === 3) {
+            madeSquares++;
+          }
+        }
+        movesPoints.push(madeSquares);
+      });
+      console.log("Points generated per possible move:");
+      console.log(movesPoints);
+      Array.from(movesPoints).forEach(element => {
+        indexedMove++;
+
+        if (element > bestMoveValue) {
+          bestMoveLocation = indexedMove;
+          bestMoveValue = element;
+        }
+      });
+
+      if (bestMoveValue > 0) { // if a move will score points, bot picks it
+        var moveToMake = clickableChoices[bestMoveLocation];
+        this.simulateClick(moveToMake);
+      }
+      else { // if no move will score points the bot will avoid giving the player a point if possible
+        Array.from(clickableChoices).forEach(element => {
+          // next big thing I need to implement:
+          // this will be used to make sure there wouldn't be a 3/4 filled square after the line is placed
+
+        });
+        var item = clickableChoices[Math.floor(Math.random()*clickableChoices.length)]; // grabs a random line from all available lines, obv. not how it will function but this is just an iteration
+        this.simulateClick(item);
+      }
     }
   
-    checkSquare = (j,k) => {
+    checkSquare = (j,k) => { // checks square completion around clicked line
       var checker1 = Math.abs(this.state.lineCoordinates['0,'+j+','+k])
       var checker2 = Math.abs(((parseFloat(j)+1))>this.state.boardSize ? 0 : this.state.lineCoordinates['0,'+(parseFloat(j)+1)+','+k])
       var checker3 = Math.abs(this.state.lineCoordinates['1,'+k+','+j])
@@ -107,13 +227,13 @@ class Board extends React.Component {
       return checker1+checker2+checker3+checker4
     }
   
-    checkGameOver = () => {
+    checkGameOver = () => { // check if any available lines are left
       this.setState((prevState) =>   ({
         winMessage: (prevState.numRed+prevState.numBlue === prevState.boardSize**2)? this.makeWinMessage(prevState) : ""
       }))
     }
   
-    makeWinMessage = (state) => {
+    makeWinMessage = (state) => { // print message when all lines are filled
       var winMessage
         if (state.numRed > state.numBlue) {
           winMessage = "Red wins! Select a board size to start a new game."
@@ -125,7 +245,7 @@ class Board extends React.Component {
         return (winMessage)
     }
   
-    changeBoardSize = (event) => {
+    changeBoardSize = (event) => { // change board size
       if (window.confirm('Are you sure you would like to start a new game?')){
         var newState
         if (event.target.id === "small") {
@@ -139,7 +259,7 @@ class Board extends React.Component {
       }
     }
   
-    selectColor = (int) => {
+    selectColor = (int) => { // hover and fill colors
       if (int===0) {
         return ("rgb(255,255,255)")
       } else if (int===1) {
@@ -149,7 +269,7 @@ class Board extends React.Component {
       }
     }
   
-    tint = (event) => {
+    tint = (event) => { // tint when hovering
       var currentCoord=event.target.dataset.coord
       if (this.state.lineCoordinates[currentCoord] === 0) {
           if (this.state.turn === "red") {
@@ -160,7 +280,7 @@ class Board extends React.Component {
       }
     }
   
-    untint = (event) => {
+    untint = (event) => { // untint when not hovering
       var currentCoord=event.target.dataset.coord
       if (this.state.lineCoordinates[currentCoord] === 0) {
         event.target.style.backgroundColor = "rgb(255,255,255)"
@@ -222,6 +342,8 @@ class Board extends React.Component {
         </div>
       );
     }
+
+    
 }
 
 export default Board
