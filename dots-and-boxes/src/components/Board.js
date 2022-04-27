@@ -1,4 +1,5 @@
 import React from "react"
+// import $ from "jquery"
 
 class Board extends React.Component {
 
@@ -207,7 +208,8 @@ class Board extends React.Component {
   
     render() {
       return (
-        <div id="game">
+        <div id="game-board" style={{ textAlign: "center", justifyConent: "center", alignItems: "center" }}> 
+          <div id="game">
             <div id="header">
                 <p id="score"> Red:{this.state.numRed} Blue:{this.state.numBlue} </p>
                 Board size :
@@ -219,7 +221,9 @@ class Board extends React.Component {
             <div id="board" key={this}>
                 {this.makeBoard(this.state.boardSize)}
             </div>
+          </div>
         </div>
+        
       );
     }
 }

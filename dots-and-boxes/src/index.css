@@ -34,10 +34,12 @@
   #board {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 10px 50px;
-    margin: 10px
+    margin-bottom: 10px;
   }
-  
+
   #header {
     padding:10px 50px;
     margin:10px
