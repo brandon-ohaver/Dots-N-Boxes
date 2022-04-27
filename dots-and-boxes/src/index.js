@@ -12,17 +12,35 @@ import "./index.css"
 
 
 const AppContainer = () => {
+  
   $(document).ready(function () {
     $("button.start").click(function () {
       $(".start").hide();
+      $(".play").hide();
     });
   });
 
   $(document).ready(function () {
     $("button.back").click(function () {
       $(".start").show();
+      $(".play").show();
+      $(".playGame").hide();
     });
   });
+
+  $(document).ready(function () {
+    $(".play").click(function () {
+        $(".playGame").show();
+      })
+    })
+  
+    $(document).ready(function () {
+      $(".playGame").click(function () {
+        $(".playGame").hide();
+        $(".start").hide();
+        $('.play').hide();
+      })
+    })
 
   return (
     <BrowserRouter>
