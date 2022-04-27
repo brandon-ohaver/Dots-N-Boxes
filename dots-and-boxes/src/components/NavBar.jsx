@@ -6,23 +6,47 @@ import Button from "@mui/material/Button";
 class NavBar extends React.Component {
   render() {
     return (
-      <Stack spacing={2} direction="column" style={{ textAlign: "center" }}>
-        <Link to="/game" style={{ textDecoration: "none" }}>
-          <Button variant="contained" color="error" className="start">
-            Play Game
-          </Button>
-        </Link>
-        <Link to="/leaderboard" style={{ textDecoration: "none" }}>
-          <Button variant="contained" color="error" className="start">
-            Leaderboard
-          </Button>
-        </Link>
-        <Link to="/cheats" style={{ textDecoration: "none" }}>
-          <Button variant="contained" color="error" className="start">
-            Secret Cheats!
-          </Button>
-        </Link>
-      </Stack>
+      <>
+        <Stack spacing={2}>
+          <div>
+          <Stack direction="column" style={{ textAlign: "center" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="error" className="play">
+              Play Game
+            </Button>
+          </Link>
+          </Stack>
+          <Stack spacing={2} direction="row" style={{ justifyContent: "center", marginTop: "1%", display: "none" }} className="playGame">
+            <Link to="/game" style={{ textDecoration: "none" }}>
+              <Button variant="contained" color="error">
+                Singleplayer
+              </Button>
+            </Link>
+            <Link to="/game" style={{ textDecoration: "none" }}>
+              <Button variant="contained" color="error">
+                Multiplayer
+              </Button>
+            </Link>
+          </Stack>
+        </div>
+        <div>
+          <Stack spacing={2} direction="column" style={{ textAlign: "center" }}>
+          <Link to="/leaderboard" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="error" className="start">
+              Leaderboard
+            </Button>
+          </Link>
+            <Link to="/cheats" style={{ textDecoration: "none" }}>
+              <Button variant="contained" color="error" className="start">
+                Secret Cheats!
+              </Button>
+           </Link>
+          </Stack>
+        </div>
+        </Stack>
+      </>
+      
+        
     );
   }
 }
