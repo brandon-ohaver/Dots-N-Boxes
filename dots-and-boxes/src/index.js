@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import MainMenu from "./containers/MainMenu.jsx";
 import Leaderboard from "./containers/Leaderboard";
-import Game from "./containers/Game.jsx";
+import SinglePlayerGame from "./containers/SinglePlayerGame.jsx";
+import MultiPlayerGame from "./containers/MultiPlayerGame.jsx";
 import Cheats from "./containers/Cheats.jsx";
 import NavBar from "./components/NavBar";
 import BackButton from "./components/BackButton"
@@ -12,11 +13,12 @@ import "./index.css"
 
 
 const AppContainer = () => {
-  
+
   $(document).ready(function () {
     $("button.start").click(function () {
       $(".start").hide();
       $(".play").hide();
+      $(".playGame").hide();
     });
   });
 
@@ -49,7 +51,8 @@ const AppContainer = () => {
       <Routes>
         <Route element={<MainMenu />} exact path="/main-menu" /> 
         <Route element={<Leaderboard />} exact path="/leaderboard" />
-        <Route element={<Game />} exact path="/game" />
+        <Route element={<SinglePlayerGame />} exact path="/single-player-game" />
+        <Route element={<MultiPlayerGame />} exact path="/multi-player-game" />
         <Route element={<Cheats />} exact path="/cheats" />
       </Routes>
       <BackButton exact path="/" />

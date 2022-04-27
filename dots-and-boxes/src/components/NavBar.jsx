@@ -17,12 +17,12 @@ class NavBar extends React.Component {
           </Link>
           </Stack>
           <Stack spacing={2} direction="row" style={{ justifyContent: "center", marginTop: "1%", display: "none" }} className="playGame">
-            <Link to="/game" style={{ textDecoration: "none" }}>
+            <Link to="/single-player-game" style={{ textDecoration: "none" }}>
               <Button variant="contained" color="error">
                 Singleplayer
               </Button>
             </Link>
-            <Link to="/game" style={{ textDecoration: "none" }}>
+            <Link to="/multi-player-game" style={{ textDecoration: "none" }}>
               <Button variant="contained" color="error">
                 Multiplayer
               </Button>

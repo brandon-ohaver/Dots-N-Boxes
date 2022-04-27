@@ -1,7 +1,7 @@
 import React from "react"
 // import $ from "jquery"
 
-class Board extends React.Component {
+class MultiPlayerBoard extends React.Component {
 
     constructor(props) {
       super(props)
@@ -228,4 +228,4 @@ class Board extends React.Component {
     }
 }
 
-export default Board
+export default MultiPlayerBoard
