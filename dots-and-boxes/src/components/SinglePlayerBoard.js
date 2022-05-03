@@ -48,7 +48,6 @@ class SinglePlayerBoard extends React.Component {
       }
       return state
     }
-    
       fillLine = (event) => { // when the player or bot clicks an available line
         var currentCoord=event.target.dataset.coord
         if (this.state.lineCoordinates[currentCoord] === 0) {

@@ -43,7 +43,7 @@ const AppContainer = () => {
         $('.play').hide();
       })
     })
-
+    
   return (
     <BrowserRouter>
       <h1 style={{ textAlign: "center" }}>Dots-N-Boxes!</h1>

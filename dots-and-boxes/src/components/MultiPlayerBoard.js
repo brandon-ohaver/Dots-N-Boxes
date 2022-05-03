@@ -15,7 +15,9 @@ class MultiPlayerBoard extends React.Component {
       turn: "red",
       winMessage: "",
       lineCoordinates: {},
-      boxColors: {}
+      boxColors: {},
+      blueName: "",
+      redName: "",
     }
     for (let i=0; i<2; i++){
       for (let j=0; j<state.boardSize+1; j++) {
@@ -29,6 +31,8 @@ class MultiPlayerBoard extends React.Component {
         state.boxColors[i+","+j] = "rgb(255,255,255)"
       }
     }
+    this.redName = prompt("Enter red player name", "");
+    this.blueName = prompt("Enter blue player name", "");
     return state
   }
   
@@ -211,7 +215,7 @@ class MultiPlayerBoard extends React.Component {
         <div id="game-board" style={{ textAlign: "center", justifyConent: "center", alignItems: "center" }}> 
           <div id="game">
             <div id="header">
-                <p id="score"> Red:{this.state.numRed} Blue:{this.state.numBlue} </p>
+                <p id="score"> {this.redName}:{this.state.numRed} {this.blueName}:{this.state.numBlue} </p>
                 Board size :
                 <button id= "small" onClick={this.changeBoardSize}> 5x5 </button>
                 <button id="medium" onClick={this.changeBoardSize}> 8x8 </button>

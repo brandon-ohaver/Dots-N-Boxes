@@ -1,9 +1,12 @@
 import React from "react";
 
 const Leaderboard = () => {
+
   return (
     <>
-      <p>This is the leaderboard</p>
+      <h2 style={{ textAlign: "center" }}>LeaderBoard</h2>
+      <hr style={{ alignContent: "center", marginLeft: "30%", marginRight: "30%" }}/>
+      <p>First Place: {}</p>
     </>
   );
 };
