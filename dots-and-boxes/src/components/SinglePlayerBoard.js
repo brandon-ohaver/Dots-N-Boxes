@@ -1,6 +1,7 @@
 import { CardContent } from "@mui/material";
 import React from "react"
 import { Card } from "@mui/material";
+import { Button } from "@mui/material";
 
 class SinglePlayerBoard extends React.Component {
 
@@ -14,7 +15,7 @@ class SinglePlayerBoard extends React.Component {
         console.log("Earl chose this div for his move:");
         console.dir(element);
         const mouseClickEvents = ['mousedown', 'click', 'mouseup'];
-        mouseClickEvents.forEach(mouseEventType =>
+        mouseClickEvents.forEach(mouseEventType => {
           element.dispatchEvent(
             new MouseEvent(mouseEventType, {
                 view: window,
@@ -23,6 +24,8 @@ class SinglePlayerBoard extends React.Component {
                 buttons: 1
             })
           )
+        }
+          
         );
   
       }
@@ -333,11 +336,14 @@ class SinglePlayerBoard extends React.Component {
             <CardContent>
               <div id="game">
                   <div id="header">
-                      <p id="score"> Red:{this.state.numRed} Blue:{this.state.numBlue} </p>
-                      Board size :
-                      <button id= "small" onClick={this.changeBoardSize}> 5x5 </button>
-                      <button id="medium" onClick={this.changeBoardSize}> 8x8 </button>
-                      <button id="large" onClick={this.changeBoardSize}> 11x11 </button>
+                      <p id="score" style={{ fontFamily: "Tahoma" }}> Red:{this.state.numRed} Blue:{this.state.numBlue} </p>
+                      <div style={{ fontFamily: "Tahoma" }}>
+                        Board size :&nbsp;&nbsp;&nbsp;
+                        <Button variant="outlined" color="error" id= "small" onClick={this.changeBoardSize} style={{ fontFamily: "Tahoma", marginRight: "5px" }}> 5x5 </Button>
+                        <Button variant="outlined" color="error" id="medium" onClick={this.changeBoardSize} style={{ fontFamily: "Tahoma", marginRight: "5px", marginLeft: "5px" }}> 8x8 </Button>
+                        <Button variant="outlined" color="error" id="large" onClick={this.changeBoardSize} style={{ fontFamily: "Tahoma", marginLeft: "5px" }}> 11x11 </Button>
+                      </div>
+                      
                       <p id="winner"> {this.state.winMessage} </p>
                   </div>
                   <div id="board" key={this}>
