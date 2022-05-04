@@ -7,9 +7,10 @@ import MultiPlayerGame from "./containers/MultiPlayerGame.jsx";
 import Cheats from "./containers/Cheats.jsx";
 import NavBar from "./components/NavBar";
 import BackButton from "./components/BackButton"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import $ from "jquery";
 import "./index.css"
+import Introduction from "./components/Introduction.js";
 
 
 const AppContainer = () => {
@@ -46,7 +47,11 @@ const AppContainer = () => {
     
   return (
     <BrowserRouter>
-      <h1 style={{ textAlign: "center" }}>Dots-N-Boxes!</h1>
+      <div style={{ justifyContent: "center", alignItems: "center", textAlign: "center",  }}>
+        <h1 style={{ color: "white"}}>Dots-N-Boxes!</h1>
+      </div>
+      <Introduction />
+        
       <NavBar />
       <Routes>
         <Route element={<MainMenu />} exact path="/main-menu" /> 
@@ -56,6 +61,7 @@ const AppContainer = () => {
         <Route element={<Cheats />} exact path="/cheats" />
       </Routes>
       <BackButton exact path="/" />
+      <Link to="/cheats"><button className="secret">Secret</button></Link>
     </BrowserRouter>
   );
 };
