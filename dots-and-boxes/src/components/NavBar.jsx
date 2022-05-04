@@ -8,7 +8,7 @@ class NavBar extends React.Component {
     return (
       <>
         <Stack spacing={2}>
-          <div>
+          <div style={{ marginBottom: "20px"}}>
           <Stack direction="column" style={{ textAlign: "center" }}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Button variant="contained" color="error" className="play">
