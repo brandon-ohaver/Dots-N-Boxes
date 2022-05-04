@@ -6,10 +6,10 @@ import Button from "@mui/material/Button";
 class BackButton extends React.Component {
   render() {
     return (
-      <Stack spacing={2} direction="column" style={{ alignContent: "center", display: "flex", textAlign: "center", marginRight: "300px" }}>
+      <Stack spacing={2} direction="column" style={{ alignContent: "center", textAlign: "center", marginTop: "20%", position: "fixed", right: "10px", bottom: "10px" }}>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Button variant="contained" color="error" className="back">
-            Back
+            Reset
           </Button>
         </Link>
       </Stack>

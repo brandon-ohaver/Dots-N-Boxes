@@ -29,20 +29,6 @@ class NavBar extends React.Component {
             </Link>
           </Stack>
         </div>
-        <div>
-          <Stack spacing={2} direction="column" style={{ textAlign: "center" }}>
-          <Link to="/leaderboard" style={{ textDecoration: "none" }}>
-            <Button variant="contained" color="error" className="start">
-              Leaderboard
-            </Button>
-          </Link>
-            <Link to="/cheats" style={{ textDecoration: "none" }}>
-              <Button variant="contained" color="error" className="start">
-                Secret Cheats!
-              </Button>
-           </Link>
-          </Stack>
-        </div>
         </Stack>
       </>
       

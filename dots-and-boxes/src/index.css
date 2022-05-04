@@ -45,3 +45,12 @@
     margin:10px
   }
   
+  .secret {
+    background: transparent;
+    border: none !important;
+    font-size:0;
+  }
+
+  body {
+    background-color: rgb(25, 32, 56);
+  }
